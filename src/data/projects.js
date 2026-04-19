@@ -5,6 +5,7 @@ export const projects = [
     description: "A comprehensive financial platform for portfolio tracking, strategy backtesting, and market data visualization.",
     techStack: ["JavaScript", "React", "Spring Boot", "MySQL"],
     link: "https://quant-edge-virid.vercel.app",
+    github: "https://github.com/bishopcommander/QuantEdge",
     image: "/quantedge.png"
   },
   {
@@ -13,6 +14,7 @@ export const projects = [
     description: "A web application for exploring and interacting with memes.",
     techStack: ["JavaScript", "HTML5", "CSS3"],
     link: "https://memeverse-five.vercel.app/",
+    github: "https://github.com/bishopcommander/memeverse",
     image: "/memeverse.png"
   },
   {
@@ -21,6 +23,7 @@ export const projects = [
     description: "A Java-based network packet simulation tool.",
     techStack: ["Java"],
     link: "https://github.com/bishopcommander/packetsimulator",
+    github: "https://github.com/bishopcommander/packetsimulator",
     image: "/packetsimulator.png"
   }
 ];
