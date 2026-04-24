@@ -13,7 +13,7 @@ export const projects = [
     title: "Memeverse",
     description: "A web application for exploring and interacting with memes.",
     techStack: ["JavaScript", "HTML5", "CSS3"],
-    link: "https://memeverse-five.vercel.app/",
+    link: "https://memeverse-nine-lemon.vercel.app/",
     github: "https://github.com/bishopcommander/memeverse",
     image: "/memeverse.png"
   },
