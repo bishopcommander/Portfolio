@@ -25,5 +25,14 @@ export const projects = [
     link: "https://github.com/bishopcommander/packetsimulator",
     github: "https://github.com/bishopcommander/packetsimulator",
     image: "/packetsimulator.png"
+  },
+  {
+    id: 4,
+    title: "Project Atlas",
+    description: "A full-stack web application featuring a Spring Boot backend and a React/Vite frontend.",
+    techStack: ["React", "Spring Boot", "Java", "Docker"],
+    link: "https://projectatlas-lq7m.onrender.com/",
+    github: "https://github.com/bishopcommander/ProjectAtlas",
+    image: "/projectatlas.png"
   }
 ];
