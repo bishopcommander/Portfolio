@@ -1,143 +1,167 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Send, Mail, MessageSquare, CheckCircle2 } from 'lucide-react';
+import { FaGithub, FaLinkedin } from 'react-icons/fa6';
+import { cn } from '../lib/utils';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-    if (status === 'error') {
-      setStatus('idle');
-      setErrorMessage('');
-    }
-  };
-
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
+  const [status, setStatus] = useState('idle');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setStatus('error');
-      setErrorMessage('Please fill out all fields.');
-      return;
-    }
-
-    if (!validateEmail(formData.email)) {
-      setStatus('error');
-      setErrorMessage('Please enter a valid email address.');
-      return;
-    }
-
     setStatus('submitting');
-    setErrorMessage('');
-
-    // Simulate form submission delay
     setTimeout(() => {
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
-      
-      // Reset success message after 5 seconds
       setTimeout(() => setStatus('idle'), 5000);
     }, 1500);
   };
 
   return (
-    <section id="contact" className="py-28 border-t border-zinc-200 dark:border-zinc-900/50 transition-colors duration-300">
-      <div className="container mx-auto px-6 max-w-2xl">
-        <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80 rounded-3xl p-8 md:p-12 shadow-md shadow-zinc-200/50 dark:shadow-none transition-all duration-300">
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-3 text-zinc-900 dark:text-white tracking-tight transition-colors">Get in touch</h2>
-            <p className="text-zinc-600 dark:text-zinc-500 text-base leading-relaxed transition-colors">
-              I'm currently open for new opportunities. Feel free to drop a message or reach out on <a href="https://github.com/bishopcommander" target="_blank" rel="noopener noreferrer" className="text-zinc-900 dark:text-zinc-300 hover:text-blue-500 dark:hover:text-white underline underline-offset-4 transition-colors font-medium">GitHub</a>.
+    <section id="contact" className="py-32 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          
+          {/* Contact Info */}
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 text-[10px] uppercase tracking-[0.2em] font-bold text-brand-cyan bg-brand-cyan/5 border border-brand-cyan/20 rounded-full">
+              Communications
+            </div>
+            <h2 className="text-5xl md:text-6xl font-bold mb-8 tracking-tight text-white">
+              Initialize <br />
+              <span className="text-zinc-500 italic">Connection.</span>
+            </h2>
+            <p className="text-zinc-500 text-lg max-w-md font-light mb-12">
+              Currently accepting new engineering challenges and collaborative opportunities. 
+              Let's build something technically superior.
             </p>
+
+            <div className="space-y-6">
+              <ContactMethod 
+                icon={Mail} 
+                label="Direct Protocol" 
+                value="parth.contact@sys.dev" 
+                href="mailto:parth.contact@sys.dev"
+              />
+              <ContactMethod 
+                icon={FaGithub} 
+                label="Source Registry" 
+                value="github.com/bishopcommander" 
+                href="https://github.com/bishopcommander"
+              />
+              <ContactMethod 
+                icon={FaLinkedin} 
+                label="Professional Node" 
+                value="linkedin.com/in/parth" 
+                href="https://linkedin.com/in/parth"
+              />
+            </div>
+
+            {/* Availability Status */}
+            <div className="mt-12 p-6 rounded-3xl bg-green-500/5 border border-green-500/10 flex items-center gap-4">
+              <div className="relative">
+                <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.8)]" />
+                <div className="absolute inset-0 w-3 h-3 rounded-full bg-green-500 animate-ping opacity-75" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-white uppercase tracking-widest">Availability Status</p>
+                <p className="text-sm text-green-500/80">Available for new projects Q3 2026</p>
+              </div>
+            </div>
           </div>
 
-          <form className="space-y-5" onSubmit={handleSubmit}>
-            <div className="grid md:grid-cols-2 gap-5">
-              <div className="space-y-1.5">
-                <label htmlFor="name" className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest pl-0.5 transition-colors">Name</label>
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="glass-card p-10 rounded-[2.5rem] glow-border border-white/5"
+          >
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-widest font-bold text-zinc-500 ml-1">Identity</label>
                 <input 
-                  type="text" 
-                  id="name" 
+                  type="text"
+                  required
+                  placeholder="Subject Name"
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-zinc-600 focus:outline-none focus:border-brand-cyan/50 focus:ring-1 focus:ring-brand-cyan/20 transition-all"
                   value={formData.name}
-                  onChange={handleChange}
-                  placeholder="What's your name?"
-                  className={`w-full bg-zinc-50 dark:bg-zinc-900/50 border rounded-lg px-4 py-3 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 shadow-sm dark:shadow-none focus:outline-none focus:ring-1 transition-all ${status === 'error' && !formData.name.trim() ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/50' : 'border-zinc-200 dark:border-zinc-800 focus:border-blue-500 focus:ring-blue-500/50 hover:border-zinc-300 dark:hover:border-zinc-700'}`}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label htmlFor="email" className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest pl-0.5 transition-colors">Email</label>
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-widest font-bold text-zinc-500 ml-1">Communication Channel</label>
                 <input 
-                  type="text" 
-                  id="email" 
+                  type="email"
+                  required
+                  placeholder="name@domain.com"
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-zinc-600 focus:outline-none focus:border-brand-cyan/50 focus:ring-1 focus:ring-brand-cyan/20 transition-all"
                   value={formData.email}
-                  onChange={handleChange}
-                  placeholder="john@example.com"
-                  className={`w-full bg-zinc-50 dark:bg-zinc-900/50 border rounded-lg px-4 py-3 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 shadow-sm dark:shadow-none focus:outline-none focus:ring-1 transition-all ${status === 'error' && (!formData.email.trim() || !validateEmail(formData.email)) ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/50' : 'border-zinc-200 dark:border-zinc-800 focus:border-blue-500 focus:ring-blue-500/50 hover:border-zinc-300 dark:hover:border-zinc-700'}`}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
                 />
               </div>
-            </div>
-            
-            <div className="space-y-1.5">
-              <label htmlFor="message" className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest pl-0.5 transition-colors">Message</label>
-              <textarea 
-                id="message" 
-                rows="5" 
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="How can I help you?"
-                className={`w-full bg-zinc-50 dark:bg-zinc-900/50 border rounded-lg px-4 py-3 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 shadow-sm dark:shadow-none focus:outline-none focus:ring-1 transition-all resize-none ${status === 'error' && !formData.message.trim() ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/50' : 'border-zinc-200 dark:border-zinc-800 focus:border-blue-500 focus:ring-blue-500/50 hover:border-zinc-300 dark:hover:border-zinc-700'}`}
-              ></textarea>
-            </div>
 
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex-1 w-full relative">
-                {status === 'error' && (
-                  <p className="absolute text-xs leading-none font-medium text-red-500 dark:text-red-400 flex items-center gap-1.5 inset-y-0 min-h-max align-middle mt-1.5">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    {errorMessage}
-                  </p>
-                )}
-                {status === 'success' && (
-                  <p className="absolute text-xs leading-none font-medium text-green-600 dark:text-green-400 flex items-center gap-1.5 animate-pulse inset-y-0 min-h-max align-middle mt-1.5">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    Sent successfully.
-                  </p>
-                )}
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-widest font-bold text-zinc-500 ml-1">Payload Description</label>
+                <textarea 
+                  required
+                  rows="5"
+                  placeholder="Describe the objective..."
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-zinc-600 focus:outline-none focus:border-brand-cyan/50 focus:ring-1 focus:ring-brand-cyan/20 transition-all resize-none"
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                />
               </div>
-              
+
               <button 
-                type="submit" 
+                type="submit"
                 disabled={status === 'submitting'}
-                className="group w-full sm:w-auto min-w-[120px] px-6 py-2.5 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-lg text-sm font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-200 shadow-md shadow-zinc-300/50 hover:shadow-lg dark:hover:shadow-none dark:shadow-none hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex justify-center items-center gap-2"
+                className={cn(
+                  "w-full py-5 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all duration-300",
+                  status === 'success' 
+                    ? "bg-green-500 text-white" 
+                    : "bg-white text-black hover:bg-brand-cyan active:scale-[0.98]"
+                )}
               >
                 {status === 'submitting' ? (
+                  <div className="w-6 h-6 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                ) : status === 'success' ? (
                   <>
-                    <svg className="animate-spin h-4 w-4 text-zinc-400 dark:text-zinc-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    <span>Sending</span>
+                    <CheckCircle2 className="w-5 h-5" />
+                    <span>Payload Delivered</span>
                   </>
                 ) : (
                   <>
-                    <span>Send</span>
-                    <svg className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-white dark:group-hover:text-black group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
+                    <Send className="w-5 h-5" />
+                    <span>Execute Connection</span>
                   </>
                 )}
               </button>
-            </div>
-          </form>
+            </form>
+          </motion.div>
         </div>
       </div>
     </section>
+  );
+}
+
+function ContactMethod({ icon: Icon, label, value, href }) {
+  return (
+    <a 
+      href={href} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="flex items-center gap-4 group p-2 -ml-2 rounded-2xl hover:bg-white/5 transition-all"
+    >
+      <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-zinc-400 group-hover:text-brand-cyan group-hover:border-brand-cyan/20 transition-all">
+        <Icon className="w-5 h-5" />
+      </div>
+      <div>
+        <p className="text-[10px] uppercase tracking-widest font-bold text-zinc-600">{label}</p>
+        <p className="text-sm text-zinc-300 font-medium">{value}</p>
+      </div>
+    </a>
   );
 }

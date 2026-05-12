@@ -1,61 +1,119 @@
+import { motion } from 'framer-motion';
 import { projects } from '../data/projects';
+import { ExternalLink, Layers, Zap } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa6';
+import { cn } from '../lib/utils';
+
+// Redesigned Projects Section
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-28 border-t border-zinc-200 dark:border-zinc-900/50 transition-colors duration-300">
-      <div className="container mx-auto px-6 max-w-5xl">
-        <div className="mb-14">
-          <h2 className="text-2xl font-bold mb-3 text-zinc-900 dark:text-white tracking-tight transition-colors">Selected Projects</h2>
-          <p className="text-zinc-600 dark:text-zinc-500 text-base max-w-2xl leading-relaxed transition-colors">
-            A curated selection of my work across systems architecture, full-stack applications, and network tooling. 
+    <section id="projects" className="py-32 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-20">
+          <div className="inline-flex items-center gap-2 px-3 py-1 mb-6 text-[10px] uppercase tracking-[0.2em] font-bold text-brand-purple bg-brand-purple/5 border border-brand-purple/20 rounded-full w-fit">
+            Production Registry
+          </div>
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-white">
+            Featured <span className="text-zinc-500 italic">Systems.</span>
+          </h2>
+          <p className="text-zinc-500 text-lg max-w-2xl font-light">
+            A collection of engineered solutions focusing on scalability, 
+            performance optimization, and technical craftsmanship.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
-            <div key={project.id} className="group bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full shadow-md shadow-zinc-200/50 hover:shadow-xl hover:shadow-zinc-200/60 dark:shadow-none dark:hover:shadow-none">
-              <div className="aspect-video rounded-lg bg-zinc-100 dark:bg-zinc-950 mb-5 overflow-hidden border border-zinc-200 dark:border-zinc-800/80 transition-colors">
-                 {project.image ? (
-                   <img src={project.image} alt={project.title} className="w-full h-full object-cover object-top" />
-                 ) : (
-                   <div className="w-full h-full flex items-center justify-center text-zinc-500 dark:text-zinc-700 text-sm transition-colors">Preview Unavailable</div>
-                 )}
-              </div>
-              
-              <div className="flex-grow">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-semibold text-zinc-900 dark:text-white tracking-tight transition-colors">{project.title}</h3>
-                </div>
-                <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-6 leading-relaxed line-clamp-3 transition-colors">
-                  {project.description}
-                </p>
-              </div>
-
-              <div className="mt-auto">
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {project.techStack.map((tech) => (
-                     <span key={tech} className="px-2.5 py-1 text-xs font-medium bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded text-zinc-700 dark:text-zinc-300 transition-colors">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="border-t border-zinc-200 dark:border-zinc-800/60 pt-4 flex items-center justify-between transition-colors">
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm font-medium text-zinc-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
-                    View Live <span className="ml-1 text-zinc-400 dark:text-zinc-500 group-hover:text-blue-500 dark:group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all">→</span>
-                  </a>
-                  {project.github && (
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="GitHub Repository">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                      </svg>
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          {projects.map((project, index) => {
+            const isFlagship = project.title === "QuantEdge";
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={cn(
+                  "group relative",
+                  isFlagship ? "md:col-span-8" : "md:col-span-4",
+                  index === 2 ? "md:col-span-5" : "",
+                  index === 3 ? "md:col-span-7" : ""
+                )}
+              >
+                <ProjectCard project={project} isFlagship={isFlagship} />
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
+  );
+}
+
+function ProjectCard({ project, isFlagship }) {
+  return (
+    <div className="glass-card h-full rounded-[2rem] overflow-hidden flex flex-col glow-border group-hover:border-brand-cyan/30 transition-all duration-500">
+      {/* Image Preview Area */}
+      <div className={cn(
+        "relative overflow-hidden bg-zinc-950",
+        isFlagship ? "aspect-[21/9]" : "aspect-video"
+      )}>
+        <img 
+          src={project.image} 
+          alt={project.title} 
+          className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-bg-dark/20 to-transparent" />
+        
+        {/* Status Indicator */}
+        <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse" />
+          <span className="text-[10px] font-bold text-white uppercase tracking-widest">v1.0.0 — LIVE</span>
+        </div>
+
+        {/* Links Overlay */}
+        <div className="absolute bottom-6 right-6 flex gap-3 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+          <a 
+            href={project.github} 
+            className="p-3 rounded-full bg-white/10 hover:bg-brand-cyan text-white hover:text-black backdrop-blur-md border border-white/10 transition-all"
+            target="_blank" rel="noopener noreferrer"
+          >
+            <FaGithub className="w-5 h-5" />
+          </a>
+          <a 
+            href={project.link} 
+            className="p-3 rounded-full bg-white text-black hover:bg-brand-cyan border border-white transition-all"
+            target="_blank" rel="noopener noreferrer"
+          >
+            <ExternalLink className="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+
+      {/* Content Area */}
+      <div className="p-8 flex flex-col flex-grow">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 rounded-xl bg-brand-cyan/5 border border-brand-cyan/20">
+            <Zap className="w-4 h-4 text-brand-cyan" />
+          </div>
+          <h3 className="text-2xl font-bold text-white tracking-tight">{project.title}</h3>
+        </div>
+
+        <p className="text-zinc-500 text-sm leading-relaxed mb-8 flex-grow">
+          {project.description}
+        </p>
+
+        <div className="flex flex-wrap gap-2 pt-6 border-t border-white/5">
+          {project.techStack.map((tech) => (
+            <span 
+              key={tech} 
+              className="px-3 py-1 text-[10px] font-bold text-zinc-400 bg-white/5 border border-white/5 rounded-full uppercase tracking-wider"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,12 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  --color-brand-cyan: #38bdf8; /* Copper Blue / Sky */
+  --color-brand-blue: #0ea5e9; /* Deep Cobalt */
+  --color-brand-purple: #b45309; /* Polished Copper */
+  
+  --color-bg-dark: #020617;
+  --color-bg-card: #070e23;
+}
 
 @layer base {
+  :root {
+    --accent: 56 189 248;
+    --accent-glow: rgba(56, 189, 248, 0.15);
+  }
+
+  * {
+    @apply border-zinc-800/50;
+  }
+
   html {
     scroll-behavior: smooth;
+    background-color: var(--color-bg-dark);
   }
+
   body {
-    @apply bg-zinc-100/80 text-zinc-900 dark:bg-[rgb(9,9,11)] dark:text-zinc-300 font-sans antialiased selection:bg-blue-500/30 transition-colors duration-300;
+    @apply bg-bg-dark text-zinc-400 font-sans antialiased selection:bg-brand-cyan/30 selection:text-brand-cyan overflow-x-hidden;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-zinc-100 font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-bg-card/40 backdrop-blur-xl border border-white/5 shadow-2xl;
+  }
+
+  .glow-border {
+    @apply relative after:absolute after:inset-0 after:rounded-[inherit] after:border after:border-brand-cyan/20 after:pointer-events-none hover:after:border-brand-cyan/40 transition-all duration-500;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+  }
+
+  .cyber-grid {
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
