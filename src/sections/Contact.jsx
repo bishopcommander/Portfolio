@@ -54,7 +54,7 @@ export default function Contact() {
                 icon={FaLinkedin} 
                 label="Professional Node" 
                 value="linkedin.com/in/parth" 
-                href="https://linkedin.com/in/parth"
+                href="https://www.linkedin.com/in/parth-talele-9b5065292/"
               />
             </div>
 
