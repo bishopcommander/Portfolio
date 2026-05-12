@@ -41,7 +41,7 @@ export default function Contact() {
               <ContactMethod 
                 icon={Mail} 
                 label="Direct Protocol" 
-                value="parth.contact@sys.dev" 
+                value="XYZ@gamil.com" 
                 href="mailto:parth.contact@sys.dev"
               />
               <ContactMethod 
